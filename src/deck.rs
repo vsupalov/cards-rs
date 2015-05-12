@@ -73,10 +73,10 @@ impl Deck {
         self.create_card_for_value(value)
     }
 
-    pub fn draw_n(&mut self, n: usize) -> Vec<Card> {
+    pub fn draw_n(&mut self, n: &usize) -> Vec<Card> {
         let mut cards = Vec::new();
 
-        for _ in 0..n {
+        for _ in 0..*n {
             cards.push(self.draw())
         }
         cards
