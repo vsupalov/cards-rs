@@ -12,7 +12,7 @@ fn draw_a_card() {
 #[test]
 fn draw_a_few_card() {
     let mut deck = Deck::new();
-    let _cards = deck.draw_n(5);
+    let _cards = deck.draw_n(&5);
     //println!("The cards are: {:?}", _cards.iter().map(|x| x.short_string()).collect::<Vec<String>>());
 
     //use std::str::{StrVector};
@@ -23,20 +23,20 @@ fn draw_a_few_card() {
 #[test]
 fn draw_all_cards() {
     let mut deck = Deck::new();
-    deck.draw_n(52);
+    deck.draw_n(&52);
 }
 
 #[test]
 #[should_panic]
 fn draw_too_many_cards() {
     let mut deck = Deck::new();
-    deck.draw_n(53);
+    deck.draw_n(&53);
 }
 
 #[test]
 fn reset_deck() {
     let mut deck = Deck::new();
-    deck.draw_n(52);
+    deck.draw_n(&52);
     deck.reset();
-    deck.draw_n(52);
+    deck.draw_n(&52);
 }
