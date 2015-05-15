@@ -73,6 +73,7 @@ impl Deck {
         self.create_card_for_value(value)
     }
 
+    //TODO: this is a bit lazy and only for testing. Rather create a function (card -> 0..52)?
     pub fn draw_as_value(&mut self) -> usize {
         let value = &self.cards[self.count_dealt];
         self.count_dealt+=1;
