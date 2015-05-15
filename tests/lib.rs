@@ -10,7 +10,7 @@ fn draw_a_card() {
 }
 
 #[test]
-fn draw_a_few_card() {
+fn draw_a_few_cards() {
     let mut deck = Deck::new();
     let _cards = deck.draw_n(&5);
     //println!("The cards are: {:?}", _cards.iter().map(|x| x.short_string()).collect::<Vec<String>>());
@@ -25,6 +25,25 @@ fn draw_all_cards() {
     let mut deck = Deck::new();
     deck.draw_n(&52);
 }
+
+#[test]
+fn draw_all_cards_and_check() {
+    let mut deck = Deck::new();
+
+    let mut cards = [false; 52];
+
+    for _ in 0..52 {
+        let v = deck.draw_as_value();
+        cards[v] = true;
+    }
+
+    for i in 0..52 {
+        if !cards[i] {
+            panic!("Card not dealt!");
+        }
+    }
+}
+
 
 #[test]
 #[should_panic]

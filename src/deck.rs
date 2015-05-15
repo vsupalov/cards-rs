@@ -73,6 +73,13 @@ impl Deck {
         self.create_card_for_value(value)
     }
 
+    pub fn draw_as_value(&mut self) -> usize {
+        let value = &self.cards[self.count_dealt];
+        self.count_dealt+=1;
+
+        *value as usize
+    }
+
     pub fn draw_n(&mut self, n: &usize) -> Vec<Card> {
         let mut cards = Vec::new();
 
