@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[allow(dead_code)]
+#[derive(Debug, PartialEq)]
 pub enum Suit {
     Spades,
     Hearts,
@@ -19,7 +19,7 @@ impl Suit {
     }
 }
 
-#[allow(dead_code)]
+#[derive(Debug, PartialEq)]
 pub enum Value {
     Two,
     Three,
@@ -57,6 +57,7 @@ impl Value {
     }
 }
 
+#[derive(Debug, PartialEq)]
 pub struct Card(pub Value, pub Suit);
 
 impl Card {
