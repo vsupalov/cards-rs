@@ -8,4 +8,4 @@ description = "Reusable playing cards library for Rust."
 name = "cards"
 
 [dependencies]
-rand = "0.3.7"
+rand = "0.3.8"
