@@ -22,12 +22,12 @@ impl Deck {
             value += 1;
         }
 
-        d.shuffle();
+        d.shuffle(); //TODO: constructor for unshuffled state?
 
         d
     }
 
-    pub fn reset(&mut self) {
+    pub fn reset(&mut self) { //TODO: is reset the right name?
         self.count_dealt = 0;
         self.shuffle();
     }
