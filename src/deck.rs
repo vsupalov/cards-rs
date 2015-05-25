@@ -12,8 +12,37 @@ pub enum DeckError {
     NotEnoughCards
 }
 
+fn create_card_for_value(value: &u16) -> Card {
+    let suit = match value/13 {
+        0 => Suit::Spades,
+        1 => Suit::Hearts,
+        2 => Suit::Diamonds,
+        3 => Suit::Clubs,
+        _ => panic!("Unexpected suit conversion number")
+    };
+
+    let value = match value%13 {
+        0 => Value::Two,
+        1 => Value::Three,
+        2 => Value::Four,
+        3 => Value::Five,
+        4 => Value::Six,
+        5 => Value::Seven,
+        6 => Value::Eight,
+        7 => Value::Nine,
+        8 => Value::Ten,
+        9 => Value::Jack,
+        10 => Value::Queen,
+        11 => Value::King,
+        12 => Value::Ace,
+        _ => panic!("Unexpected value conversion number")
+    };
+
+    Card(value, suit)
+}
+
 impl Deck {
-    //TODO: multiple decks?
+    //TODO: a deck containing multiple sets of cards? When 52*3 is needed.
 
     pub fn new_unshuffled() -> Deck {
         let mut d = Deck {
@@ -49,35 +78,6 @@ impl Deck {
         rng.shuffle(&mut self.cards);
     }
 
-    fn create_card_for_value(&self, value: &u16) -> Card {
-        let suit = match value/13 {
-            0 => Suit::Spades,
-            1 => Suit::Hearts,
-            2 => Suit::Diamonds,
-            3 => Suit::Clubs,
-            _ => panic!("Unexpected suit conversion number")
-        };
-
-        let value = match value%13 {
-            0 => Value::Two,
-            1 => Value::Three,
-            2 => Value::Four,
-            3 => Value::Five,
-            4 => Value::Six,
-            5 => Value::Seven,
-            6 => Value::Eight,
-            7 => Value::Nine,
-            8 => Value::Ten,
-            9 => Value::Jack,
-            10 => Value::Queen,
-            11 => Value::King,
-            12 => Value::Ace,
-            _ => panic!("Unexpected value conversion number")
-        };
-
-        Card(value, suit)
-    }
-
     pub fn draw(&mut self) -> Result<Card, DeckError> {
         if (self.count_dealt + 1) > 52 {
             Err(DeckError::NotEnoughCards)
@@ -85,7 +85,7 @@ impl Deck {
             let value = &self.cards[self.count_dealt];
             self.count_dealt+=1;
 
-            let card = self.create_card_for_value(value);
+            let card = create_card_for_value(value);
             Ok(card)
         }
     }
