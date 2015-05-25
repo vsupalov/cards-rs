@@ -1,4 +1,3 @@
-//use std::fmt;
 use rand;
 use rand::{Rng};
 
@@ -9,8 +8,14 @@ pub struct Deck {
     cards: [u16; 52],
 }
 
+pub enum DeckError {
+    NotEnoughCards
+}
+
 impl Deck {
-    pub fn new() -> Deck {
+    //TODO: multiple decks?
+
+    pub fn new_unshuffled() -> Deck {
         let mut d = Deck {
             count_dealt: 0,
             cards: [0; 52],
@@ -21,13 +26,20 @@ impl Deck {
             *x = value;
             value += 1;
         }
-
-        d.shuffle(); //TODO: constructor for unshuffled state?
-
         d
     }
 
-    pub fn reset(&mut self) { //TODO: is reset the right name?
+    pub fn new_shuffled() -> Deck {
+        let mut d = Deck::new_unshuffled();
+        d.shuffle();
+        d
+    }
+
+    pub fn reset_unshuffled(&mut self) {
+        self.count_dealt = 0;
+    }
+
+    pub fn reset_shuffled(&mut self) {
         self.count_dealt = 0;
         self.shuffle();
     }
@@ -66,28 +78,30 @@ impl Deck {
         Card(value, suit)
     }
 
-    pub fn draw(&mut self) -> Card {
-        let value = &self.cards[self.count_dealt];
-        self.count_dealt+=1;
+    pub fn draw(&mut self) -> Result<Card, DeckError> {
+        if (self.count_dealt + 1) > 52 {
+            Err(DeckError::NotEnoughCards)
+        } else {
+            let value = &self.cards[self.count_dealt];
+            self.count_dealt+=1;
 
-        self.create_card_for_value(value)
-    }
-
-    //TODO: this is a bit lazy and only for testing. Rather create a function (card -> 0..52)?
-    pub fn draw_as_value(&mut self) -> usize {
-        let value = &self.cards[self.count_dealt];
-        self.count_dealt+=1;
-
-        *value as usize
-    }
-
-    pub fn draw_n(&mut self, n: &usize) -> Vec<Card> {
-        let mut cards = Vec::new();
-
-        for _ in 0..*n {
-            cards.push(self.draw())
+            let card = self.create_card_for_value(value);
+            Ok(card)
         }
-        cards
+    }
+
+    pub fn draw_n(&mut self, n: &usize) -> Result<Vec<Card>, DeckError> {
+        if (self.count_dealt + n) > 52 {
+            Err(DeckError::NotEnoughCards)
+        } else {
+            let mut cards = Vec::new();
+
+            for _ in 0..*n {
+                cards.push(self.draw().ok().unwrap());
+            }
+
+            Ok(cards)
+        }
     }
 }
 
