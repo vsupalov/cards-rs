@@ -13,7 +13,7 @@ fn draw_a_card() {
 #[test]
 fn draw_a_few_cards() {
     let mut deck = Deck::new_shuffled();
-    let _cards = deck.draw_n(&5).ok().unwrap();
+    let _cards = deck.draw_n(5).ok().unwrap();
     //println!("The cards are: {:?}", _cards.iter().map(|x| x.short_string()).collect::<Vec<String>>());
 
     //use std::str::{StrVector};
@@ -24,33 +24,32 @@ fn draw_a_few_cards() {
 #[test]
 fn draw_all_cards() {
     let mut deck = Deck::new_unshuffled();
-    deck.draw_n(&52).ok().unwrap();
+    deck.draw_n(52).ok().unwrap();
 }
 
 // translates a card to a value between 0 and 51 inclusive
 fn card_to_value(card: Card) -> usize {
-    let Card(ref card_value, ref card_suit) = card;
 
-    let value = 4*match card_value {
-        &Value::Two => 0,
-        &Value::Three => 1,
-        &Value::Four => 2,
-        &Value::Five => 3,
-        &Value::Six => 4,
-        &Value::Seven => 5,
-        &Value::Eight => 6,
-        &Value::Nine => 7,
-        &Value::Ten => 8,
-        &Value::Jack => 9,
-        &Value::Queen => 10,
-        &Value::King => 11,
-        &Value::Ace => 12,
+    let value = 4*match card.value {
+        Value::Two => 0,
+        Value::Three => 1,
+        Value::Four => 2,
+        Value::Five => 3,
+        Value::Six => 4,
+        Value::Seven => 5,
+        Value::Eight => 6,
+        Value::Nine => 7,
+        Value::Ten => 8,
+        Value::Jack => 9,
+        Value::Queen => 10,
+        Value::King => 11,
+        Value::Ace => 12,
     };
-    let suit = match card_suit {
-        &Suit::Hearts => 0,
-        &Suit::Spades => 1,
-        &Suit::Diamonds => 2,
-        &Suit::Clubs => 3,
+    let suit = match card.suit {
+        Suit::Hearts => 0,
+        Suit::Spades => 1,
+        Suit::Diamonds => 2,
+        Suit::Clubs => 3,
     };
 
     suit + value
@@ -80,13 +79,13 @@ fn draw_all_cards_and_check() {
 #[should_panic]
 fn draw_too_many_cards() {
     let mut deck = Deck::new_shuffled();
-    deck.draw_n(&53).ok().unwrap();
+    deck.draw_n(53).ok().unwrap();
 }
 
 #[test]
 fn reset_deck() {
     let mut deck = Deck::new_unshuffled();
-    deck.draw_n(&52).ok().unwrap();
+    deck.draw_n(52).ok().unwrap();
     deck.reset_unshuffled();
-    deck.draw_n(&52).ok().unwrap();
+    deck.draw_n(52).ok().unwrap();
 }

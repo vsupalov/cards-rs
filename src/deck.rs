@@ -5,7 +5,9 @@ use card::{Suit, Value, Card};
 
 pub struct Deck {
     count_dealt: usize,
-    cards: [u16; 52],
+    // TODO: consider turning this into a Vec<Card>, for iterator
+    // goodness. deck.next() producing Option<Card>?
+    cards: [u8; 52],
 }
 
 pub enum DeckError {
@@ -13,7 +15,7 @@ pub enum DeckError {
 }
 
 /// translates a value between 0 and 51 to a Card. Used internally.
-fn create_card_for_value(value: &u16) -> Card {
+fn create_card_for_value(value: u8) -> Card {
     let suit = match value/13 {
         0 => Suit::Spades,
         1 => Suit::Hearts,
@@ -39,7 +41,7 @@ fn create_card_for_value(value: &u16) -> Card {
         _ => panic!("Unexpected value conversion number")
     };
 
-    Card(value, suit)
+    Card::new(value, suit)
 }
 
 /// A deck can be dealt from and shuffled.
@@ -86,10 +88,10 @@ impl Deck {
 
     /// An attempt to get a card from the deck. There might not be enough.
     pub fn draw(&mut self) -> Result<Card, DeckError> {
-        if (self.count_dealt + 1) > 52 {
+        if self.count_dealt + 1 > 52 {
             Err(DeckError::NotEnoughCards)
         } else {
-            let value = &self.cards[self.count_dealt];
+            let value = self.cards[self.count_dealt];
             self.count_dealt+=1;
 
             let card = create_card_for_value(value);
@@ -98,13 +100,13 @@ impl Deck {
     }
 
     /// An attempt to get n cards from the deck wrapped in a Vec. There might not be enough.
-    pub fn draw_n(&mut self, n: &usize) -> Result<Vec<Card>, DeckError> {
-        if (self.count_dealt + n) > 52 {
+    pub fn draw_n(&mut self, n: usize) -> Result<Vec<Card>, DeckError> {
+        if self.count_dealt + n > 52 {
             Err(DeckError::NotEnoughCards)
         } else {
             let mut cards = Vec::new();
 
-            for _ in 0..*n {
+            for _ in 0..n {
                 cards.push(self.draw().ok().unwrap());
             }
 
