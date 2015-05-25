@@ -1,6 +1,6 @@
 [package]
 name = "cards"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Vladislav Supalov <v.supalov@gmail.com>"]
 description = "Reusable playing cards library for Rust."
 
