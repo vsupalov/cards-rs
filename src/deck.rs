@@ -12,6 +12,7 @@ pub enum DeckError {
     NotEnoughCards
 }
 
+/// translates a value between 0 and 51 to a Card. Used internally.
 fn create_card_for_value(value: &u16) -> Card {
     let suit = match value/13 {
         0 => Suit::Spades,
@@ -41,9 +42,11 @@ fn create_card_for_value(value: &u16) -> Card {
     Card(value, suit)
 }
 
+/// A deck can be dealt from and shuffled.
 impl Deck {
     //TODO: a deck containing multiple sets of cards? When 52*3 is needed.
 
+    /// Returns a deck where all cards are sorted by Suit, then by Value.
     pub fn new_unshuffled() -> Deck {
         let mut d = Deck {
             count_dealt: 0,
@@ -58,16 +61,19 @@ impl Deck {
         d
     }
 
+    /// A freshly shuffled deck of 52 cards.
     pub fn new_shuffled() -> Deck {
         let mut d = Deck::new_unshuffled();
         d.shuffle();
         d
     }
 
+    /// Just pretend nothing was ever dealt.
     pub fn reset_unshuffled(&mut self) {
         self.count_dealt = 0;
     }
 
+    /// Shuffle the cards - just as if you were starting with a fresh shuffled deck.
     pub fn reset_shuffled(&mut self) {
         self.count_dealt = 0;
         self.shuffle();
@@ -78,6 +84,7 @@ impl Deck {
         rng.shuffle(&mut self.cards);
     }
 
+    /// An attempt to get a card from the deck. There might not be enough.
     pub fn draw(&mut self) -> Result<Card, DeckError> {
         if (self.count_dealt + 1) > 52 {
             Err(DeckError::NotEnoughCards)
@@ -90,6 +97,7 @@ impl Deck {
         }
     }
 
+    /// An attempt to get n cards from the deck wrapped in a Vec. There might not be enough.
     pub fn draw_n(&mut self, n: &usize) -> Result<Vec<Card>, DeckError> {
         if (self.count_dealt + n) > 52 {
             Err(DeckError::NotEnoughCards)

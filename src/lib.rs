@@ -1,3 +1,7 @@
+//! cards-rs contains a Card type to represent playing cards and a Deck
+//! which is a convenient method to generate reasonable amounts of
+//! randomly ordered playing cards.
+
 extern crate rand;
 
 pub mod card;
