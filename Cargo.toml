@@ -4,6 +4,7 @@ version = "1.1.0"
 authors = ["Vladislav Supalov <v.supalov@gmail.com>"]
 keywords = ["cards", "poker"]
 description = "Reusable playing cards library for Rust."
+homepage = "https://github.com/th4t/cards-rs"
 license = "MIT"
 readme = "README.md"
 
