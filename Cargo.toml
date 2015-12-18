@@ -1,6 +1,6 @@
 [package]
 name = "cards"
-version = "1.1.1"
+version = "1.1.2"
 authors = ["Vladislav Supalov <v.supalov@gmail.com>"]
 keywords = ["cards", "poker"]
 description = "Reusable playing cards library for Rust."
@@ -12,4 +12,4 @@ readme = "README.md"
 name = "cards"
 
 [dependencies]
-rand = "0.3.8"
+rand = "0.3.12"
