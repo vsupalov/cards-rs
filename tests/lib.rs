@@ -89,3 +89,10 @@ fn reset_deck() {
     deck.reset_unshuffled();
     deck.draw_n(52).ok().unwrap();
 }
+
+#[test]
+#[should_panic]
+fn unwrap_deck_error(){
+    let mut deck = Deck::new_unshuffled();
+    deck.draw_n(53).unwrap();
+}

@@ -10,6 +10,7 @@ pub struct Deck {
     cards: [u8; 52],
 }
 
+#[derive(Debug)]
 pub enum DeckError {
     NotEnoughCards
 }
