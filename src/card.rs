@@ -11,10 +11,10 @@ pub enum Suit {
 impl Suit {
     fn short_string(&self) -> &'static str {
         match *self {
-            Suit::Spades => "s",
-            Suit::Hearts => "h",
-            Suit::Diamonds => "d",
-            Suit::Clubs => "c",
+            Suit::Spades => "♤",
+            Suit::Hearts => "♡",
+            Suit::Diamonds => "♢",
+            Suit::Clubs => "♧",
         }
     }
 }
