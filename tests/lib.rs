@@ -89,3 +89,11 @@ fn reset_deck() {
     deck.reset_unshuffled();
     deck.draw_n(52).ok().unwrap();
 }
+
+#[test]
+fn card_display(){
+    assert_eq!("A♤", format!("{}",Card{value: Value::Ace, suit:Suit::Spades}));
+    assert_eq!("A♡", format!("{}",Card{value: Value::Ace, suit:Suit::Hearts}));
+    assert_eq!("A♢", format!("{}",Card{value: Value::Ace, suit:Suit::Diamonds}));
+    assert_eq!("A♧", format!("{}",Card{value: Value::Ace, suit:Suit::Clubs}));
+}
