@@ -67,4 +67,16 @@ impl Deck {
             Err(DeckError::NotEnoughCards)
         }
     }
+
+    pub fn remove(&mut self, card: Card) -> Result<Card, DeckError> {
+        // TODO: Use self.cards.remove_item when the API stablizes
+        // match self.cards.remove_item(c) {
+        //     Some(c) => Ok(c),
+        //     None => Err(DeckError::CardNotInDeck)
+        // }
+        match self.cards.iter().position(|c| *c == card) {
+            Some(index) => Ok(self.cards.remove(index)),
+            None => Err(DeckError::CardNotInDeck),
+        }
+    }
 }

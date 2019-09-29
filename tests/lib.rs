@@ -81,3 +81,45 @@ fn draw_too_many_cards() {
     let mut deck = Deck::new_shuffled();
     deck.draw_n(53).ok().unwrap();
 }
+
+#[test]
+fn remove_card() {
+    let mut deck = Deck::new_shuffled();
+
+    let card = Card::new(Value::Ace, Suit::Spades);
+
+    // Remove the requested card from the deck
+    deck.remove(card).ok().unwrap();
+
+    // The card we removed should not be in any of the remaining 51 cards
+    for current_card in deck.draw_n(51).ok().unwrap() {
+        if current_card == card {
+            panic!()
+        }
+    }
+}
+
+#[test]
+#[should_panic]
+fn double_remove_card() {
+    let mut deck = Deck::new_shuffled();
+
+    let card = Card::new(Value::Ace, Suit::Spades);
+
+    // This one works
+    deck.remove(card).ok().unwrap();
+
+    // This one panics
+    deck.remove(card).ok().unwrap();
+}
+
+#[test]
+#[should_panic]
+fn remove_drawn_card() {
+    let mut deck = Deck::new_shuffled();
+
+    let card = deck.draw().ok().unwrap();
+
+    // Panics becuase we already drew the card
+    deck.remove(card).ok().unwrap();
+}
