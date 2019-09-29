@@ -62,18 +62,26 @@ impl Value {
 #[derive(Debug, Eq, PartialEq, Copy, Clone, Ord, PartialOrd, Hash)]
 pub struct Card {
     pub value: Value,
-    pub suit: Suit
+    pub suit: Suit,
 }
 
 impl Card {
     pub fn new(value: Value, suit: Suit) -> Card {
-        Card{ value: value, suit: suit }
+        Card {
+            value: value,
+            suit: suit,
+        }
     }
 }
 
 // so cards can be printed using fmt method
 impl fmt::Display for Card {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}{}", self.value.short_string(), self.suit.short_string())
+        write!(
+            f,
+            "{}{}",
+            self.value.short_string(),
+            self.suit.short_string()
+        )
     }
 }

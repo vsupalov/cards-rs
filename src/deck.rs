@@ -1,7 +1,7 @@
 use rand;
-use rand::{Rng};
+use rand::Rng;
 
-use card::{Suit, Value, Card};
+use card::{Card, Suit, Value};
 
 pub struct Deck {
     count_dealt: usize,
@@ -11,20 +11,20 @@ pub struct Deck {
 }
 
 pub enum DeckError {
-    NotEnoughCards
+    NotEnoughCards,
 }
 
 /// translates a value between 0 and 51 to a Card. Used internally.
 fn create_card_for_value(value: u8) -> Card {
-    let suit = match value/13 {
+    let suit = match value / 13 {
         0 => Suit::Spades,
         1 => Suit::Hearts,
         2 => Suit::Diamonds,
         3 => Suit::Clubs,
-        _ => panic!("Unexpected suit conversion number")
+        _ => panic!("Unexpected suit conversion number"),
     };
 
-    let value = match value%13 {
+    let value = match value % 13 {
         0 => Value::Two,
         1 => Value::Three,
         2 => Value::Four,
@@ -38,7 +38,7 @@ fn create_card_for_value(value: u8) -> Card {
         10 => Value::Queen,
         11 => Value::King,
         12 => Value::Ace,
-        _ => panic!("Unexpected value conversion number")
+        _ => panic!("Unexpected value conversion number"),
     };
 
     Card::new(value, suit)
@@ -92,7 +92,7 @@ impl Deck {
             Err(DeckError::NotEnoughCards)
         } else {
             let value = self.cards[self.count_dealt];
-            self.count_dealt+=1;
+            self.count_dealt += 1;
 
             let card = create_card_for_value(value);
             Ok(card)

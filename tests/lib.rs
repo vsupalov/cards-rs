@@ -1,7 +1,9 @@
 extern crate cards;
 
-use cards::deck::{Deck};
-use cards::card::{Card, Suit, Value};
+use cards::{
+    card::{Card, Suit, Value, get_value_for_card},
+    deck::Deck,
+};
 
 #[test]
 fn draw_a_card() {
@@ -73,7 +75,6 @@ fn draw_all_cards_and_check() {
         }
     }
 }
-
 
 #[test]
 #[should_panic]
