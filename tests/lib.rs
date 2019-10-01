@@ -1,7 +1,9 @@
 extern crate cards;
 
-use cards::deck::{Deck};
-use cards::card::{Card, Suit, Value};
+use cards::{
+    card::{Card, Suit, Value},
+    deck::Deck,
+};
 
 #[test]
 fn draw_a_card() {
@@ -29,8 +31,7 @@ fn draw_all_cards() {
 
 // translates a card to a value between 0 and 51 inclusive
 fn card_to_value(card: Card) -> usize {
-
-    let value = 4*match card.value {
+    let value = 4 * match card.value {
         Value::Two => 0,
         Value::Three => 1,
         Value::Four => 2,
@@ -74,7 +75,6 @@ fn draw_all_cards_and_check() {
     }
 }
 
-
 #[test]
 #[should_panic]
 fn draw_too_many_cards() {
@@ -83,9 +83,43 @@ fn draw_too_many_cards() {
 }
 
 #[test]
-fn reset_deck() {
-    let mut deck = Deck::new_unshuffled();
-    deck.draw_n(52).ok().unwrap();
-    deck.reset_unshuffled();
-    deck.draw_n(52).ok().unwrap();
+fn remove_card() {
+    let mut deck = Deck::new_shuffled();
+
+    let card = Card::new(Value::Ace, Suit::Spades);
+
+    // Remove the requested card from the deck
+    deck.remove(card).ok().unwrap();
+
+    // The card we removed should not be in any of the remaining 51 cards
+    for current_card in deck.draw_n(51).ok().unwrap() {
+        if current_card == card {
+            panic!()
+        }
+    }
+}
+
+#[test]
+#[should_panic]
+fn double_remove_card() {
+    let mut deck = Deck::new_shuffled();
+
+    let card = Card::new(Value::Ace, Suit::Spades);
+
+    // This one works
+    deck.remove(card).ok().unwrap();
+
+    // This one panics
+    deck.remove(card).ok().unwrap();
+}
+
+#[test]
+#[should_panic]
+fn remove_drawn_card() {
+    let mut deck = Deck::new_shuffled();
+
+    let card = deck.draw().ok().unwrap();
+
+    // Panics becuase we already drew the card
+    deck.remove(card).ok().unwrap();
 }
